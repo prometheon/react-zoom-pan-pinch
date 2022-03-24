@@ -3,7 +3,6 @@ import {
   ReactZoomPanPinchContext,
   ReactZoomPanPinchState,
 } from "../../models";
-import { isExcludedNode } from "../../utils";
 import { getMouseBoundedPosition } from "../bounds/bounds.utils";
 import { handleCalculateZoomPositions } from "../zoom/zoom.utils";
 
@@ -11,7 +10,6 @@ export const isPanningStartAllowed = (
   contextInstance: ReactZoomPanPinchContext,
   event: MouseEvent | TouchEvent,
 ): boolean => {
-  const { excluded } = contextInstance.setup.panning;
   const { isInitialized, wrapperComponent } = contextInstance;
 
   const target = event.target as HTMLElement;
@@ -20,15 +18,14 @@ export const isPanningStartAllowed = (
 
   if (!isAllowed) return false;
 
-  const isExcluded = isExcludedNode(target, excluded);
-
-  if (isExcluded) return false;
+  if (!event.altKey) return false;
 
   return true;
 };
 
 export const isPanningAllowed = (
   contextInstance: ReactZoomPanPinchContext,
+  event: MouseEvent | TouchEvent,
 ): boolean => {
   const { isInitialized, isPanning, setup } = contextInstance;
   const { disabled } = setup.panning;
@@ -36,6 +33,8 @@ export const isPanningAllowed = (
   const isAllowed = isInitialized && isPanning && !disabled;
 
   if (!isAllowed) return false;
+
+  if (!event.altKey) return false;
 
   return true;
 };

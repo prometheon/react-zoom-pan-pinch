@@ -1,7 +1,7 @@
 import { ReactZoomPanPinchContext } from "../../models";
 import { PositionType } from "../../models";
 
-import { checkIsNumber, isExcludedNode, roundNumber } from "../../utils";
+import { checkIsNumber, roundNumber } from "../../utils";
 import { checkZoomBounds } from "../zoom/zoom.utils";
 
 export const isWheelAllowed = (
@@ -9,10 +9,7 @@ export const isWheelAllowed = (
   event: WheelEvent,
 ): boolean => {
   const {
-    disabled,
-    wheelDisabled,
-    touchPadDisabled,
-    excluded,
+    disabled
   } = contextInstance.setup.wheel;
   const { isInitialized, isPanning } = contextInstance;
 
@@ -20,13 +17,8 @@ export const isWheelAllowed = (
   const isAllowed = isInitialized && !isPanning && !disabled && target;
 
   if (!isAllowed) return false;
-  // Event ctrlKey detects if touchpad action is executing wheel or pinch gesture
-  if (wheelDisabled && !event.ctrlKey) return false;
-  if (touchPadDisabled && event.ctrlKey) return false;
-
-  const isExcluded = isExcludedNode(target, excluded);
-
-  if (isExcluded) return false;
+  // Event ctrlKey/metaKey detects if touchpad action is executing wheel or pinch gesture
+  if (!(event.ctrlKey || event.metaKey)) return false;
 
   return true;
 };

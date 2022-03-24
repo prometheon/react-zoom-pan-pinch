@@ -217,7 +217,7 @@ class TransformContext extends Component<
 
     if (disabled) return;
 
-    const isAllowed = isPanningAllowed(this);
+    const isAllowed = isPanningAllowed(this, event);
     if (!isAllowed) return;
 
     const keysPressed = this.isPressingKeys(this.setup.panning.activationKeys);
@@ -331,7 +331,7 @@ class TransformContext extends Component<
     if (this.isPanning && event.touches.length === 1) {
       if (disabled) return;
 
-      const isAllowed = isPanningAllowed(this);
+      const isAllowed = isPanningAllowed(this, event);
       if (!isAllowed) return;
 
       event.preventDefault();
