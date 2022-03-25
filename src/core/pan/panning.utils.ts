@@ -18,14 +18,13 @@ export const isPanningStartAllowed = (
 
   if (!isAllowed) return false;
 
-  if (!event.altKey) return false;
+  if (!(event.button === 1)) return false;
 
   return true;
 };
 
 export const isPanningAllowed = (
   contextInstance: ReactZoomPanPinchContext,
-  event: MouseEvent | TouchEvent,
 ): boolean => {
   const { isInitialized, isPanning, setup } = contextInstance;
   const { disabled } = setup.panning;
@@ -33,8 +32,6 @@ export const isPanningAllowed = (
   const isAllowed = isInitialized && isPanning && !disabled;
 
   if (!isAllowed) return false;
-
-  if (!event.altKey) return false;
 
   return true;
 };
