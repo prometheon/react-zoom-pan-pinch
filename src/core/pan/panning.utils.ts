@@ -6,6 +6,10 @@ import {
 import { getMouseBoundedPosition } from "../bounds/bounds.utils";
 import { handleCalculateZoomPositions } from "../zoom/zoom.utils";
 
+function isMouseEvent(event: MouseEvent | TouchEvent): event is MouseEvent {
+    return event.hasOwnProperty('button');
+}
+
 export const isPanningStartAllowed = (
   contextInstance: ReactZoomPanPinchContext,
   event: MouseEvent | TouchEvent,
@@ -18,7 +22,7 @@ export const isPanningStartAllowed = (
 
   if (!isAllowed) return false;
 
-  if (!(event.button === 1)) return false;
+  if (isMouseEvent(event) && !(event.button === 1)) return false;
 
   return true;
 };
