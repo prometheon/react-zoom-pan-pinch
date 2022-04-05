@@ -3,11 +3,9 @@ export const isExcludedNode = (
   excluded: string[],
 ): boolean => {
   const targetTagName = node.tagName.toUpperCase();
-  console.log('rzpp', targetTagName);
   const isExcludedTag = excluded.find(
     (tag) => tag.toUpperCase() === targetTagName,
   );
-    console.log('anything')
   if (isExcludedTag) return true;
 
   const isExcludedClassName = excluded.find((className) =>
@@ -20,7 +18,6 @@ export const isExcludedNode = (
   let isExcludedParentClass;
 
   while(elem.tagName.toUpperCase() !== 'BODY') {
-      console.log('rzpp classes', elem.classList)
     isExcludedParentClass = excluded.find((className) =>
       elem.classList.contains(className),
     );
