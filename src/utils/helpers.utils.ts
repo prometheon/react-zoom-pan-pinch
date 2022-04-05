@@ -13,7 +13,20 @@ export const isExcludedNode = (
     node.classList.contains(className),
   );
 
+
   if (isExcludedClassName) return true;
+
+  let elem = node as HTMLElement;
+  let isExcludedParentClass;
+
+  while(elem.tagName.toUpperCase() !== 'BODY') {
+    isExcludedParentClass = excluded.find((className) =>
+      elem.classList.contains(className),
+    );
+
+    if (isExcludedParentClass) return true;
+    elem = elem.parentNode as HTMLElement;
+  }
 
   return false;
 };
